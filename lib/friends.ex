@@ -32,13 +32,12 @@ defmodule Friends do
 #                      end
 #          end
 
-    def import_from_csv(csv_path) do
-      Agent.start_link(fn -> %{departments: %HashDict{}, communes: []} end, name: __MODULE__)
+    def import_from_csv(file.csv) do
+      Agent.start_link(fn -> %{fname: %HashDict{}, lname: [], age: []} end, Title: __MODULE__)
 
-      File.stream!(Path.expand(csv_path))
+      File.stream!(Path.expand(file.csv))
       |> CSV.decode(separator: ?;, headers: true)
-      |> Stream.each(fn row ->
-        _process_csv_row(row, agent)
+      |> Stream.each(fn row -> _process_csv_row(row, agent)
       end )
       |> Stream.run
     end
