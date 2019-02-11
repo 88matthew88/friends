@@ -32,10 +32,10 @@ defmodule Friends do
 #                      end
 #          end
 
-    def import_from_csv(file.csv) do
+    def import_from_csv(friends\lib\friends\file.csv) do
       Agent.start_link(fn -> %{fname: %HashDict{}, lname: [], age: []} end, Title: __MODULE__)
 
-      File.stream!(Path.expand(file.csv))
+      File.stream!(Path.expand(friends\lib\friends\file.csv))
       |> CSV.decode(separator: ?;, headers: true)
       |> Stream.each(fn row -> _process_csv_row(row, agent)
       end )
@@ -43,7 +43,14 @@ defmodule Friends do
     end
 
     defp _process_csv_row(row, agent) do
-      # TODO
+      Enum.each(fn
+      {:ok, [fname, lname, age]} ->
+      Person.changeset(%Person{},
+      %{Firstname: fname,
+      Lastname: lname,
+      age: age}
+      )
+      |>Friends.Repo.insert
     end
 
 #end
