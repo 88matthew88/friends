@@ -27,7 +27,7 @@ defmodule Friends do
                             age: age})
                     |>Repo.insert
 
-        end)
+        end   
 
 
         end
